@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>J5MOC Viewer</title>
+
+<script type="module"
+src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.1.0/model-viewer.min.js">
+</script>
+
+<style>
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #111;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+model-viewer {
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at center, #333 0%, #111 70%);
+}
+
+.instructions-button {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 28px;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 999px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+</style>
+</head>
+
+<body>
+
+<model-viewer
+    src="model.glb"
+    alt="J5MOC 3D Modell"
+    camera-controls
+    auto-rotate
+    auto-rotate-delay="0"
+    camera-orbit="35deg 70deg auto"
+    field-of-view="30deg"
+    shadow-intensity="1.5"
+    exposure="1.2"
+    environment-image="neutral"
+    interaction-prompt="none">
+</model-viewer>
+
+<a
+    class="instructions-button"
+    href="https://reb.li/m/209065"
+    target="_blank"
+    rel="noopener noreferrer">
+    Instructions
+</a>
+
+</body>
+</html>
