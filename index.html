@@ -65,8 +65,9 @@ model-viewer {
     auto-rotate
     auto-rotate-delay="0"
     camera-orbit="0deg 75deg auto"
-    shadow-intensity="1"
-    exposure="1"
+    shadow-intensity="1.25"
+    shadow-softness="0.75"
+    exposure="1.05"
     environment-image="neutral">
 </model-viewer>
 
@@ -77,6 +78,27 @@ model-viewer {
     rel="noopener noreferrer">
     Instructions
 </a>
+
+<script type="module">
+const viewer = document.querySelector('model-viewer');
+function refinePlastic() {
+    if (!viewer.model) return;
+    let refined = 0;
+    for (const material of viewer.model.materials) {
+        const pbr = material.pbrMetallicRoughness;
+        // Preserve transparent pieces and intentionally metallic surfaces.
+        if (material.getAlphaMode() !== 'OPAQUE' ||
+            pbr.baseColorFactor[3] < 1 || pbr.metallicFactor >= 0.5) continue;
+        pbr.setMetallicFactor(0);
+        pbr.setRoughnessFactor(0.28);
+        refined++;
+    }
+    viewer.dataset.refinedMaterials = String(refined);
+}
+viewer.addEventListener('load', refinePlastic);
+await customElements.whenDefined('model-viewer');
+if (viewer.loaded) refinePlastic();
+</script>
 
 </body>
 </html>
