@@ -53,13 +53,19 @@ model-viewer {
     background: rgba(255,255,255,0.35);
     transform: translateX(-50%) scale(1.05);
 }
+.ao-toggle {
+    position: fixed; top: 16px; right: 16px; z-index: 1000;
+    padding: 10px 16px; border: 1px solid #999; border-radius: 999px;
+    background: rgba(255,255,255,.85); color: #333; cursor: pointer;
+    font: 600 14px Arial, sans-serif;
+}
 </style>
 </head>
 
 <body>
 
 <model-viewer
-    src="Untitled.glb"
+    src="J5MOC-AO.glb"
     alt="LEGO Modell"
     camera-controls
     auto-rotate
@@ -79,6 +85,7 @@ model-viewer {
     Instructions
 </a>
 
+<button class="ao-toggle" type="button" aria-pressed="true">AO: Ein</button>
 <script type="module">
 const viewer = document.querySelector('model-viewer');
 function refinePlastic() {
@@ -95,6 +102,14 @@ function refinePlastic() {
     }
     viewer.dataset.refinedMaterials = String(refined);
 }
+const toggle = document.querySelector('.ao-toggle');
+toggle.addEventListener('click', () => {
+    const enabled = toggle.getAttribute('aria-pressed') !== 'true';
+    toggle.setAttribute('aria-pressed', String(enabled));
+    toggle.textContent = enabled ? 'AO: Ein' : 'AO: Aus';
+    delete viewer.dataset.refinedMaterials;
+    viewer.src = enabled ? 'J5MOC-AO.glb' : 'Untitled.glb';
+});
 viewer.addEventListener('load', refinePlastic);
 await customElements.whenDefined('model-viewer');
 if (viewer.loaded) refinePlastic();
