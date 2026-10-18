@@ -103,6 +103,8 @@ function refinePlastic() {
     viewer.dataset.refinedMaterials = String(refined);
 }
 const toggle = document.querySelector('.ao-toggle');
+// Keep the comparison control on the standalone viewer only.
+toggle.hidden = window.self !== window.top;
 toggle.addEventListener('click', () => {
     const enabled = toggle.getAttribute('aria-pressed') !== 'true';
     toggle.setAttribute('aria-pressed', String(enabled));
